@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: email-service
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        enabled: true
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        instance-id: ${spring.application.name}:${server.port}
+  mail:
+    host: smtp.mailtrap.io
+    port: 2525
+    username: 009657e4df10f3
+    password: 4883fb9f6627ea
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    test-connection: true
+
+server:
+  port: 8082
+

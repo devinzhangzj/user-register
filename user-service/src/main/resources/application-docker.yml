@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/userdb
+    username: postgres
+    password: root
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        health-check-path: /actuator/health
+        health-check-interval: 10s
