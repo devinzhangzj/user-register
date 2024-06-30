@@ -1,6 +1,9 @@
 
 ## Getting Started
 I recorded a short video, Demo.mp4, demonstrating the project's structure and operation. 
+Here is the demo video: 
+https://drive.google.com/file/d/1Jwdl8QP9AisZuFei_U-KTaYsGLda4glo/view?usp=drive_link
+Please set the video quality to 720p for better viewing by clicking the right corner setting.
 
 Due to my busy work schedule and many family matters to handle over the weekends, 
 I could only spend 3-4 hours on this project, leaving many parts incomplete. 
