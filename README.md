@@ -17,7 +17,7 @@ Please understand.
 
 3. Clone the repository:
     ```sh
-    git clone https://github.com/devin.zhangzj/user-register.git
+    git clone https://github.com/devinzhangzj/user-register.git
     cd user-register
     ```
 
