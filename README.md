@@ -5,11 +5,6 @@ Here is the demo video:
 https://drive.google.com/file/d/1Jwdl8QP9AisZuFei_U-KTaYsGLda4glo/view?usp=drive_link
 Please set the video quality to 720p for better viewing by clicking the right corner setting.
 
-Due to my busy work schedule and many family matters to handle over the weekends, 
-I could only spend 3-4 hours on this project, leaving many parts incomplete. 
-
-Please understand.
-
 Based on the Mac system:
 
 1. Install PostgreSQL locally:
@@ -117,10 +112,17 @@ user-register/
 |               |-- application.properties
 |   |-- Dockerfile
 |-- frontend/
+|   |-- src/
+|       |-- App.js
+|       |-- App.css
+|       |-- index.js         
+|       |-- index.js
+|       |-- components/
+|           |-- UserList.js
+|           |-- UserForm.js
+|   |-- Dockerfile
 |-- db-init/
 |   |-- init.sql
 |-- docker-compose.yml
 |-- README.md
 |-- build.sh
-
-```
