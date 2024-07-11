@@ -10,31 +10,24 @@ I could only spend 3-4 hours on this project, leaving many parts incomplete.
 
 Please understand.
 
-1. Install Consul (Mac OS)
-   brew tap hashicorp/tap
-   brew install hashicorp/tap/consul 
+Based on the Mac system:
 
-2. Check and start consul
-   consul --version
-   consul agent -dev
+1. Install PostgreSQL locally:
+   - Install: `brew install postgresql@12`
+   - Start the service: `brew services start postgresql@12`
+   - Check the version: `psql --version`
+   - Enter: `psql postgres`
+   - Create a role and password, and set permissions:
+     ```
+     CREATE USER postgres WITH PASSWORD 'root';
+     ALTER USER postgres WITH CREATEDB; 
+     ALTER USER postgres WITH SUPERUSER; 
+     ```
 
-3. Clone the repository:
-    ```sh
-    git clone https://github.com/devinzhangzj/user-register.git
-    cd user-register
-    ```
+2. Install Docker and start Docker (details omitted)
 
-4. Ensure the database is initialized:
-   db-init/init.sql，create userdb in postgresql
-
-5. Run all services in Spring boot env: gateway-service, user-service, email-service
-
-6. Run the frontend service
-    ```sh
-    cd frontend
-    npm install
-    npm start
-    ```
+3. Run the project:
+   - In the project root directory, run: `./build.sh`
 
 ## API Endpoints
 
