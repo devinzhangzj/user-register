@@ -11,61 +11,67 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
+import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UserServiceTest {
 
-	@InjectMocks
-	private UserServiceImpl userService;
+  @InjectMocks
+  private UserServiceImpl userService;
 
-	@Mock
-	private UserRepository userRepository;
+  @Mock
+  private UserRepository userRepository;
 
-	@BeforeEach
-	void setUp() {
-		MockitoAnnotations.openMocks(this);
-	}
+  @Mock
+  private RestTemplate restTemplate;
 
-	@Test
-	void registerUser_ShouldRegisterUser_WhenUserNameIsUnique() {
-		UserDTO userDTO = new UserDTO(null, "newuser", "newuser@example.com", "password123");
+  @BeforeEach
+  void setUp() {
+    MockitoAnnotations.openMocks(this);
+  }
 
-		when(userRepository.findByUserName(userDTO.getUserName())).thenReturn(Optional.empty());
+  @Test
+  void registerUserWhenUserNameIsUnique() {
+    UserDTO userDTO = new UserDTO(null, "newuser", "password123", "newuser@example.com");
 
-		User user = new User();
-		user.setId(1L);
-		user.setUserName(userDTO.getUserName());
-		user.setEmail(userDTO.getEmail());
-		user.setPassword(userDTO.getPassword());
-		user.setActive(true);
+    when(userRepository.findByUserName(userDTO.getUserName())).thenReturn(Optional.empty());
+    when(restTemplate.postForObject(anyString(), any(), eq(String.class))).thenReturn("Success");
 
-		when(userRepository.save(any(User.class))).thenReturn(user);
+    User user = new User();
+    user.setId(1L);
+    user.setUserName(userDTO.getUserName());
+    user.setEmail(userDTO.getEmail());
+    user.setPassword(userDTO.getPassword());
+    user.setActive(true);
 
-		UserDTO result = userService.registerUser(userDTO);
+    when(userRepository.save(any(User.class))).thenReturn(user);
 
-		assertNotNull(result);
-		assertEquals("newuser", result.getUserName());
-		assertEquals("newuser@example.com", result.getEmail());
-		verify(userRepository, times(1)).findByUserName(userDTO.getUserName());
-		verify(userRepository, times(1)).save(any(User.class));
-	}
+    UserDTO result = userService.registerUser(userDTO);
 
-	@Test
-	void registerUser_ShouldThrowException_WhenUserNameIsNotUnique() {
-		UserDTO userDTO = new UserDTO(null, "existinguser", "existinguser@example.com", "password123");
-		User existingUser = new User();
-		existingUser.setUserName("existinguser");
+    assertNotNull(result);
+    assertEquals("newuser", result.getUserName());
+    assertEquals("newuser@example.com", result.getEmail());
+    verify(userRepository, times(1)).findByUserName(userDTO.getUserName());
+    verify(userRepository, times(1)).save(any(User.class));
+  }
 
-		when(userRepository.findByUserName(userDTO.getUserName())).thenReturn(Optional.of(existingUser));
+  @Test
+  void registerUserShouldThrowExceptionWhenUserNameIsNotUnique() {
+    UserDTO userDTO = new UserDTO(null, "existinguser", "existinguser@example.com", "password123");
+    User existingUser = new User();
+    existingUser.setUserName("existinguser");
 
-		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-			userService.registerUser(userDTO);
-		});
+    when(userRepository.findByUserName(userDTO.getUserName())).thenReturn(
+        Optional.of(existingUser));
 
-		assertEquals("Username already exists", exception.getMessage());
-		verify(userRepository, times(1)).findByUserName(userDTO.getUserName());
-		verify(userRepository, times(0)).save(any(User.class));
-	}
+    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+      userService.registerUser(userDTO);
+    });
+
+    assertEquals("Username already exists", exception.getMessage());
+    verify(userRepository, times(1)).findByUserName(userDTO.getUserName());
+    verify(userRepository, times(0)).save(any(User.class));
+  }
 }

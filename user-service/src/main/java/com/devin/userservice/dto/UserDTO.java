@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 public class UserDTO {
     private Long id;
 
-    @NotBlank(message = "First name is mandatory")
+    @NotBlank(message = "Username is mandatory")
     private String userName;
 
-    @NotBlank(message = "Last name is mandatory")
+    @NotBlank(message = "Password is mandatory")
     private String password;
 
     @NotBlank(message = "Email is mandatory")
